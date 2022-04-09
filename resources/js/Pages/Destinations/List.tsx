@@ -57,12 +57,12 @@ export default function DestinationList(props: DestinationListProps) {
 
     function filteredDestinations() {
         const destinations = props.destinations;    
-        const processedSearchKey = searchKey.toLocaleLowerCase().trim();
+        const processedSearchKey = searchKey.toLowerCase().trim();
         if (searchKey.length > 0) {
             return destinations.filter(destination =>
-                destination.location.toLocaleLowerCase().indexOf(processedSearchKey) > -1 ||
-                destination.reasons.toLocaleLowerCase().indexOf(processedSearchKey) > -1 || 
-                destination.date.toLocaleLowerCase().indexOf(processedSearchKey) > -1
+                (destination.location && destination.location.toLowerCase().indexOf(processedSearchKey) > -1) ||
+                (destination.reasons && destination.reasons.toLowerCase().indexOf(processedSearchKey) > -1) || 
+                (destination.date && destination.date.toLowerCase().indexOf(processedSearchKey) > -1)
             );
         }
 

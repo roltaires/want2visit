@@ -4465,11 +4465,11 @@ function DestinationList(props) {
 
   function filteredDestinations() {
     var destinations = props.destinations;
-    var processedSearchKey = searchKey.toLocaleLowerCase().trim();
+    var processedSearchKey = searchKey.toLowerCase().trim();
 
     if (searchKey.length > 0) {
       return destinations.filter(function (destination) {
-        return destination.location.toLocaleLowerCase().indexOf(processedSearchKey) > -1 || destination.reasons.toLocaleLowerCase().indexOf(processedSearchKey) > -1 || destination.date.toLocaleLowerCase().indexOf(processedSearchKey) > -1;
+        return destination.location && destination.location.toLowerCase().indexOf(processedSearchKey) > -1 || destination.reasons && destination.reasons.toLowerCase().indexOf(processedSearchKey) > -1 || destination.date && destination.date.toLowerCase().indexOf(processedSearchKey) > -1;
       });
     }
 
