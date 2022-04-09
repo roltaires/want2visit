@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Authenticated from '@/Layouts/Authenticated';
 import { Head, useForm } from '@inertiajs/inertia-react';
 import Input from '@/Components/Input';
+import Textarea from '@/Components/Textarea';
 import Button from '@/Components/Button';
 
 export default function Dashboard(props: { auth: any; errors: any; }) {
@@ -52,8 +53,7 @@ export default function Dashboard(props: { auth: any; errors: any; }) {
                                 </div>
                                 <div className='mb-2'>
                                     <label htmlFor="reasons">Why do I want to go there?</label>
-                                    <Input
-                                        type="text"
+                                    <Textarea
                                         name="reasons"
                                         id="reasons"
                                         value={data.reasons}

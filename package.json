@@ -16,6 +16,7 @@
         "@inertiajs/inertia-react": "^0.8.0",
         "@inertiajs/progress": "^0.2.6",
         "@tailwindcss/forms": "^0.4.0",
+        "@types/lodash": "^4.14.181",
         "@types/react": "^18.0.0",
         "alpinejs": "^3.4.2",
         "autoprefixer": "^10.4.2",

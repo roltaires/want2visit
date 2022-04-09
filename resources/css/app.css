@@ -1,3 +1,31 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.sortable {
+    position: relative;
+}
+
+.sortable::after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    content: '';
+    height: 100%;
+    width: 30px;
+    background-image: url("data:image/svg+xml,%3Csvg width='24px' height='24px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15.2044 15.3211L16.8012 13.7243L17.5083 14.4314L15.058 16.8817L14.7044 17.2353L14.3509 16.8817L11.9006 14.4314L12.6077 13.7243L14.2044 15.3211V7.21705H15.2044V15.3211ZM9.30385 8.91421V17.0182H10.3038V8.91421L11.9006 10.511L12.6077 9.80385L10.1574 7.35355L9.80385 7L9.45029 7.35355L6.99999 9.80385L7.7071 10.511L9.30385 8.91421Z' fill='black'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    opacity: .4;
+}
+
+.sortable.sort-asc::after{
+    background-image: url("data:image/svg+xml,%3Csvg width='24px' height='24px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M12.0809 7.28641L12.4345 6.93286L12.788 7.28641L17 11.4984L16.2929 12.2055L12.9345 8.84707V16.9999H11.9345V8.84707L8.57605 12.2055L7.86895 11.4984L12.0809 7.28641Z' fill='black'/%3E%3C/svg%3E");
+    opacity: 1;
+}
+
+.sortable.sort-desc::after {
+    background-image: url("data:image/svg+xml,%3Csvg width='24px' height='24px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M11.9191 16.7136L11.5655 17.0671L11.212 16.7136L7 12.5016L7.70711 11.7945L11.0655 15.1529V7.00009H12.0655V15.1529L15.4239 11.7945L16.1311 12.5016L11.9191 16.7136Z' fill='black'/%3E%3C/svg%3E");
+    opacity: 1;
+}

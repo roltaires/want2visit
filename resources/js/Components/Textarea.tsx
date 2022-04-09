@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
 interface IInputProps {
-    type: string;
     name: string;
     id?: string;
     value: string;
@@ -9,12 +8,11 @@ interface IInputProps {
     autoComplete?: string;
     required?: boolean;
     isFocused?: boolean;
-    handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    placeholder?: string;
+    rows?: number;
+    handleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 export default function Input({
-    type = 'text',
     name,
     value,
     id,
@@ -22,10 +20,10 @@ export default function Input({
     autoComplete,
     required = false,
     isFocused = false,
+    rows = 3,
     handleChange,
-    placeholder,
 }: IInputProps): JSX.Element {
-    const input = useRef<HTMLInputElement>(null);
+    const input = useRef<HTMLTextAreaElement>(null);
 
     useEffect(() => {
         if (isFocused && input.current) {
@@ -35,8 +33,7 @@ export default function Input({
 
     return (
         <div className="flex flex-col items-start">
-            <input
-                type={type}
+            <textarea
                 name={name}
                 id={id}
                 value={value}
@@ -47,8 +44,8 @@ export default function Input({
                 ref={input}
                 autoComplete={autoComplete}
                 required={required}
+                rows={rows}
                 onChange={(e) => handleChange(e)}
-                placeholder={placeholder}
             />
         </div>
     );

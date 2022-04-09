@@ -2459,7 +2459,8 @@ function Input(_ref) {
       required = _ref$required === void 0 ? false : _ref$required,
       _ref$isFocused = _ref.isFocused,
       isFocused = _ref$isFocused === void 0 ? false : _ref$isFocused,
-      handleChange = _ref.handleChange;
+      handleChange = _ref.handleChange,
+      placeholder = _ref.placeholder;
   var input = (0, react_1.useRef)(null);
   (0, react_1.useEffect)(function () {
     if (isFocused && input.current) {
@@ -2479,7 +2480,8 @@ function Input(_ref) {
     required: required,
     onChange: function onChange(e) {
       return handleChange(e);
-    }
+    },
+    placeholder: placeholder
   }));
 }
 
@@ -2601,6 +2603,101 @@ function ResponsiveNavLink(_ref) {
 }
 
 exports["default"] = ResponsiveNavLink;
+
+/***/ }),
+
+/***/ "./resources/js/Components/Textarea.tsx":
+/*!**********************************************!*\
+  !*** ./resources/js/Components/Textarea.tsx ***!
+  \**********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+function Input(_ref) {
+  var name = _ref.name,
+      value = _ref.value,
+      id = _ref.id,
+      className = _ref.className,
+      autoComplete = _ref.autoComplete,
+      _ref$required = _ref.required,
+      required = _ref$required === void 0 ? false : _ref$required,
+      _ref$isFocused = _ref.isFocused,
+      isFocused = _ref$isFocused === void 0 ? false : _ref$isFocused,
+      _ref$rows = _ref.rows,
+      rows = _ref$rows === void 0 ? 3 : _ref$rows,
+      handleChange = _ref.handleChange;
+  var input = (0, react_1.useRef)(null);
+  (0, react_1.useEffect)(function () {
+    if (isFocused && input.current) {
+      input.current.focus();
+    }
+  }, []);
+  return react_1["default"].createElement("div", {
+    className: "flex flex-col items-start"
+  }, react_1["default"].createElement("textarea", {
+    name: name,
+    id: id,
+    value: value,
+    className: "border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm " + className,
+    ref: input,
+    autoComplete: autoComplete,
+    required: required,
+    rows: rows,
+    onChange: function onChange(e) {
+      return handleChange(e);
+    }
+  }));
+}
+
+exports["default"] = Input;
 
 /***/ }),
 
@@ -3751,6 +3848,8 @@ var inertia_react_1 = __webpack_require__(/*! @inertiajs/inertia-react */ "./nod
 
 var Input_1 = __importDefault(__webpack_require__(/*! @/Components/Input */ "./resources/js/Components/Input.tsx"));
 
+var Textarea_1 = __importDefault(__webpack_require__(/*! @/Components/Textarea */ "./resources/js/Components/Textarea.tsx"));
+
 var Button_1 = __importDefault(__webpack_require__(/*! @/Components/Button */ "./resources/js/Components/Button.tsx"));
 
 function Dashboard(props) {
@@ -3822,8 +3921,7 @@ function Dashboard(props) {
     className: 'mb-2'
   }, react_1["default"].createElement("label", {
     htmlFor: "reasons"
-  }, "Why do I want to go there?"), react_1["default"].createElement(Input_1["default"], {
-    type: "text",
+  }, "Why do I want to go there?"), react_1["default"].createElement(Textarea_1["default"], {
     name: "reasons",
     id: "reasons",
     value: data.reasons,
@@ -3869,6 +3967,8 @@ var Authenticated_1 = __importDefault(__webpack_require__(/*! @/Layouts/Authenti
 var inertia_react_1 = __webpack_require__(/*! @inertiajs/inertia-react */ "./node_modules/@inertiajs/inertia-react/dist/index.js");
 
 var Input_1 = __importDefault(__webpack_require__(/*! @/Components/Input */ "./resources/js/Components/Input.tsx"));
+
+var Textarea_1 = __importDefault(__webpack_require__(/*! @/Components/Textarea */ "./resources/js/Components/Textarea.tsx"));
 
 var Button_1 = __importDefault(__webpack_require__(/*! @/Components/Button */ "./resources/js/Components/Button.tsx"));
 
@@ -3942,8 +4042,7 @@ function Edit(props) {
     className: 'mb-2'
   }, react_1["default"].createElement("label", {
     htmlFor: "reasons"
-  }, "Why do I want to go there?"), react_1["default"].createElement(Input_1["default"], {
-    type: "text",
+  }, "Why do I want to go there?"), react_1["default"].createElement(Textarea_1["default"], {
     name: "reasons",
     id: "reasons",
     value: data.reasons,
@@ -3972,6 +4071,58 @@ exports["default"] = Edit;
 "use strict";
 
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -3982,7 +4133,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 var Authenticated_1 = __importDefault(__webpack_require__(/*! @/Layouts/Authenticated */ "./resources/js/Layouts/Authenticated.tsx"));
 
@@ -3990,8 +4141,69 @@ var inertia_react_1 = __webpack_require__(/*! @inertiajs/inertia-react */ "./nod
 
 var Button_1 = __importDefault(__webpack_require__(/*! @/Components/Button */ "./resources/js/Components/Button.tsx"));
 
+var Input_1 = __importDefault(__webpack_require__(/*! @/Components/Input */ "./resources/js/Components/Input.tsx"));
+
+var inertia_1 = __webpack_require__(/*! @inertiajs/inertia */ "./node_modules/@inertiajs/inertia/dist/index.js");
+
 function DestinationList(props) {
   var route = window.route;
+  var sorts = props.sorts || new Array();
+
+  var _ref = (0, react_1.useState)(''),
+      _ref2 = _slicedToArray(_ref, 2),
+      searchKey = _ref2[0],
+      setSearchkey = _ref2[1];
+
+  function getSortingClass(field) {
+    var index = sorts.findIndex(function (sort) {
+      return sort.indexOf(field + '|') > -1;
+    });
+
+    if (index > -1) {
+      var sortString = sorts[index];
+
+      var _sortString$split = sortString.split('|'),
+          _sortString$split2 = _slicedToArray(_sortString$split, 2),
+          fieldName = _sortString$split2[0],
+          sortBy = _sortString$split2[1];
+
+      return "sort-".concat(sortBy);
+    }
+
+    return '';
+  }
+
+  function sort(e, field) {
+    if (sorts.length > 1 && !e.ctrlKey) {
+      sorts = [field + '|asc'];
+    } else if (sorts.indexOf(field + '|asc') > -1) {
+      sorts[sorts.indexOf(field + '|asc')] = field + '|desc';
+    } else if (sorts.indexOf(field + '|desc') > -1) {
+      sorts.splice(sorts.indexOf(field + '|desc'), 1);
+    } else if (e.ctrlKey) {
+      sorts.push(field + '|asc');
+    } else {
+      sorts = [field + '|asc'];
+    }
+
+    inertia_1.Inertia.get(route('destinations.index'), {
+      sorts: sorts
+    });
+  }
+
+  function filteredDestinations() {
+    var destinations = props.destinations;
+    var processedSearchKey = searchKey.toLocaleLowerCase().trim();
+
+    if (searchKey.length > 0) {
+      return destinations.filter(function (destination) {
+        return destination.location.toLocaleLowerCase().indexOf(processedSearchKey) > -1 || destination.reasons.toLocaleLowerCase().indexOf(processedSearchKey) > -1 || destination.date.toLocaleLowerCase().indexOf(processedSearchKey) > -1;
+      });
+    }
+
+    return destinations;
+  }
+
   return react_1["default"].createElement(Authenticated_1["default"], {
     auth: props.auth,
     errors: props.errors,
@@ -4009,18 +4221,39 @@ function DestinationList(props) {
   }, react_1["default"].createElement("div", {
     className: "p-6 bg-white border-b border-gray-200"
   }, react_1["default"].createElement("div", {
-    className: 'text-right mb-2'
+    className: 'flex items-center mb-2'
+  }, react_1["default"].createElement("div", {
+    className: "w-3/4"
+  }, react_1["default"].createElement(Input_1["default"], {
+    type: "text",
+    name: "searchKey",
+    value: searchKey,
+    handleChange: function handleChange(e) {
+      return setSearchkey(e.currentTarget.value);
+    },
+    className: "w-full",
+    placeholder: "Search your destinations"
+  })), react_1["default"].createElement("div", {
+    className: "w-1/4 text-right"
   }, react_1["default"].createElement(inertia_react_1.Link, {
     href: route('destinations.create')
-  }, react_1["default"].createElement(Button_1["default"], null, "Add New"))), react_1["default"].createElement("table", {
+  }, react_1["default"].createElement(Button_1["default"], null, "Add New")))), react_1["default"].createElement("table", {
     className: "table-auto horder-collapse border border-slate-400 w-full"
   }, react_1["default"].createElement("thead", null, react_1["default"].createElement("tr", null, react_1["default"].createElement("th", {
-    className: "border border-slate-300 bg-slate-100 text-left p-2"
+    className: "border border-slate-300 bg-slate-100 text-left p-2 cursor-pointer sortable " + getSortingClass('location'),
+    onClick: function onClick(e) {
+      return sort(e, 'location');
+    }
   }, "Location"), react_1["default"].createElement("th", {
-    className: "border border-slate-300 bg-slate-100 text-left p-2"
+    className: "border border-slate-300 bg-slate-100 text-left p-2 cursor-pointer sortable " + getSortingClass('date'),
+    onClick: function onClick(e) {
+      return sort(e, 'date');
+    }
   }, "When"), react_1["default"].createElement("th", {
+    className: "border border-slate-300 bg-slate-100 text-left p-2"
+  }, "Why"), react_1["default"].createElement("th", {
     className: "border border-slate-300 bg-slate-100 text-left p-2 w-1/6"
-  }))), react_1["default"].createElement("tbody", null, props.destinations.length > 0 && props.destinations.map(function (destination) {
+  }))), react_1["default"].createElement("tbody", null, filteredDestinations().length > 0 && filteredDestinations().map(function (destination) {
     return react_1["default"].createElement("tr", {
       key: destination.id,
       className: "border border-slate-300"
@@ -4029,6 +4262,8 @@ function DestinationList(props) {
     }, destination.location), react_1["default"].createElement("td", {
       className: 'border border-slate-300 p-2'
     }, destination.date), react_1["default"].createElement("td", {
+      className: 'border border-slate-300 p-2'
+    }, destination.reasons), react_1["default"].createElement("td", {
       className: 'border border-slate-300 p-2 text-center'
     }, react_1["default"].createElement(inertia_react_1.Link, {
       href: route('destinations.edit', destination.id),
@@ -4041,12 +4276,13 @@ function DestinationList(props) {
       }),
       method: "delete",
       as: "button",
-      type: "button"
-    }, react_1["default"].createElement(Button_1["default"], {
-      className: 'bg-red-600'
-    }, "Delete"))));
-  }), props.destinations.length < 1 && react_1["default"].createElement("tr", null, react_1["default"].createElement("td", {
-    colSpan: 3,
+      className: 'inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest active:bg-gray-900 transition ease-in-out duration-150 bg-red-600'
+    }, "Delete")));
+  }), filteredDestinations().length < 1 && searchKey.length > 0 && react_1["default"].createElement("tr", null, react_1["default"].createElement("td", {
+    colSpan: 4,
+    className: 'border border-slate-300 p-2 text-center'
+  }, "No results found")), props.destinations.length < 1 && react_1["default"].createElement("tr", null, react_1["default"].createElement("td", {
+    colSpan: 4,
     className: 'border border-slate-300 p-2 text-center'
   }, "Add your destinations now!")))))))));
 }

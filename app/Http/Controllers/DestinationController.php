@@ -8,13 +8,25 @@ use Inertia\Inertia;
 
 class DestinationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $detinations = Destination::all();
+        $destinations = Destination::query();
 
-        return Inertia::render('Destinations/List', [
-            'destinations' => $detinations
-        ]);
+        $sorts = $request->sorts;
+
+        if ($sorts) {
+            foreach ($sorts as $sort) {
+                [$orderField, $orderBy] = explode('|',$sort);
+
+                $destinations->orderBy($orderField, $orderBy);
+            }
+        }
+
+        $destinations = $destinations->get();
+
+        return Inertia::render('Destinations/List', array_merge([
+            'destinations' => $destinations], $request->input()
+        ));
     }
 
     public function create()
