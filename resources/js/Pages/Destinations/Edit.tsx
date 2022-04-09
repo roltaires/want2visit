@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Authenticated from '@/Layouts/Authenticated';
 import { Head, useForm } from '@inertiajs/inertia-react';
 import Input from '@/Components/Input';
 import Textarea from '@/Components/Textarea';
 import Button from '@/Components/Button';
 import Select from '@/Components/Select';
+import debounce from 'lodash/debounce';
 
 interface IEditProps {
     auth: any;
@@ -19,6 +20,24 @@ interface IEditProps {
     }
 }
 
+type SearchResultType = {
+    total: number;
+    totalPages: number;
+    photos: {
+        unspash_id: string;
+        raw_url: string;
+        full_url: string;
+        regular_url: string;
+        small_url: string;
+        small_s3_url: string;
+        unsplash_user_id: string;
+        unsplash_user_name: string;
+        unsplash_user_first_name: string;
+        unsplash_user_last_name: string;
+        unsplash_user_link_html: string;
+    }[];
+}
+
 export default function Edit(props: IEditProps) {
     const { data, setData, put, processing, errors } = useForm({
         id: props.destination.id,
@@ -28,6 +47,9 @@ export default function Edit(props: IEditProps) {
         date_year: props.destination.date_year || '',
         reasons: props.destination.reasons || '',
     })
+    const axios = (window as any).axios;
+    const route = (window as any).route;
+    const [searchResults, setSearchResults] = useState<SearchResultType>();
 
     const years = new Array();
     const yearNow = new Date().getFullYear();
@@ -54,6 +76,21 @@ export default function Edit(props: IEditProps) {
         e.preventDefault();
         put(`/destinations/${data.id}`);
     }
+
+    function searchPhotos () {
+        const searchKey = data.location;
+
+        axios.get(
+            route('destination-photos.search'),
+            {params: {query: searchKey}}
+        )
+        .then((response: any) => {
+            setSearchResults(response.data);
+        }).catch((err: any) => {
+            console.log(err);
+        });
+    }
+    searchPhotos();
 
     return (
         <Authenticated
@@ -112,6 +149,23 @@ export default function Edit(props: IEditProps) {
                                     Submit
                                 </Button>
                             </form>
+                        </div>
+                    </div>
+                    <div className="mt-4 bg-white shadow-sm sm:rounded-lg">
+                        <div className="p-6 bg-white border-b border-gray-200">
+                            <h2 className='text-center text-xl font-semibold'>
+                                Photos Inspirations 
+                                <span className="text-sm font-normal"> (Powered by <a href='https://unsplash.com/?utm_source=your_app_name&utm_medium=referral' target='_blank' className='underline'>Unsplash</a>)</span>
+                            </h2>
+                            <div className='search-results w-full relative'>
+                                <div className='search-results-box w-full p-6 sm:rounded-lg transition ease-in-out overflow-auto columns-3 gap-3'>
+                                    {searchResults && searchResults.photos.map(photo =>
+                                        <div className='image-result w-full mb-3'>
+                                            <img src={photo.small_url} className="w-full" />
+                                        </div>  
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

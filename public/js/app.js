@@ -4063,6 +4063,58 @@ exports["default"] = Dashboard;
 "use strict";
 
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var __createBinding = this && this.__createBinding || (Object.create ? function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  var desc = Object.getOwnPropertyDescriptor(m, k);
+
+  if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+    desc = {
+      enumerable: true,
+      get: function get() {
+        return m[k];
+      }
+    };
+  }
+
+  Object.defineProperty(o, k2, desc);
+} : function (o, m, k, k2) {
+  if (k2 === undefined) k2 = k;
+  o[k2] = m[k];
+});
+
+var __setModuleDefault = this && this.__setModuleDefault || (Object.create ? function (o, v) {
+  Object.defineProperty(o, "default", {
+    enumerable: true,
+    value: v
+  });
+} : function (o, v) {
+  o["default"] = v;
+});
+
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+  }
+
+  __setModuleDefault(result, mod);
+
+  return result;
+};
+
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
     "default": mod
@@ -4073,7 +4125,7 @@ Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
 
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 
 var Authenticated_1 = __importDefault(__webpack_require__(/*! @/Layouts/Authenticated */ "./resources/js/Layouts/Authenticated.tsx"));
 
@@ -4101,6 +4153,14 @@ function Edit(props) {
       put = _ref.put,
       processing = _ref.processing,
       errors = _ref.errors;
+
+  var axios = window.axios;
+  var route = window.route;
+
+  var _ref2 = (0, react_1.useState)(),
+      _ref3 = _slicedToArray(_ref2, 2),
+      searchResults = _ref3[0],
+      setSearchResults = _ref3[1];
 
   var years = new Array();
   var yearNow = new Date().getFullYear();
@@ -4155,6 +4215,20 @@ function Edit(props) {
     put("/destinations/".concat(data.id));
   }
 
+  function searchPhotos() {
+    var searchKey = data.location;
+    axios.get(route('destination-photos.search'), {
+      params: {
+        query: searchKey
+      }
+    }).then(function (response) {
+      setSearchResults(response.data);
+    })["catch"](function (err) {
+      console.log(err);
+    });
+  }
+
+  searchPhotos();
   return react_1["default"].createElement(Authenticated_1["default"], {
     auth: props.auth,
     errors: props.errors,
@@ -4228,7 +4302,30 @@ function Edit(props) {
   }, errors.reasons)), react_1["default"].createElement(Button_1["default"], {
     type: 'submit',
     processing: processing
-  }, "Submit")))))));
+  }, "Submit")))), react_1["default"].createElement("div", {
+    className: "mt-4 bg-white shadow-sm sm:rounded-lg"
+  }, react_1["default"].createElement("div", {
+    className: "p-6 bg-white border-b border-gray-200"
+  }, react_1["default"].createElement("h2", {
+    className: 'text-center text-xl font-semibold'
+  }, "Photos Inspirations", react_1["default"].createElement("span", {
+    className: "text-sm font-normal"
+  }, " (Powered by ", react_1["default"].createElement("a", {
+    href: 'https://unsplash.com/?utm_source=your_app_name&utm_medium=referral',
+    target: '_blank',
+    className: 'underline'
+  }, "Unsplash"), ")")), react_1["default"].createElement("div", {
+    className: 'search-results w-full relative'
+  }, react_1["default"].createElement("div", {
+    className: 'search-results-box w-full p-6 sm:rounded-lg transition ease-in-out overflow-auto columns-3 gap-3'
+  }, searchResults && searchResults.photos.map(function (photo) {
+    return react_1["default"].createElement("div", {
+      className: 'image-result w-full mb-3'
+    }, react_1["default"].createElement("img", {
+      src: photo.small_url,
+      className: "w-full"
+    }));
+  }))))))));
 }
 
 exports["default"] = Edit;
@@ -4761,6 +4858,7 @@ window._ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.baseURL = '/api';
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
