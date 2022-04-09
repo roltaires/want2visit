@@ -4,6 +4,7 @@ import { Head, useForm } from '@inertiajs/inertia-react';
 import Input from '@/Components/Input';
 import Textarea from '@/Components/Textarea';
 import Button from '@/Components/Button';
+import Select from '@/Components/Select';
 
 interface IEditProps {
     auth: any;
@@ -12,6 +13,8 @@ interface IEditProps {
         id: number;
         location: string;
         date: string;
+        date_month: string | number;
+        date_year: string;
         reasons: string;
     }
 }
@@ -19,15 +22,39 @@ interface IEditProps {
 export default function Edit(props: IEditProps) {
     const { data, setData, put, processing, errors } = useForm({
         id: props.destination.id,
-        location: props.destination.location,
-        date: props.destination.date ? props.destination.date : '',
-        reasons: props.destination.reasons ? props.destination.reasons : '',
+        location: props.destination.location || '',
+        date: props.destination.date || '',
+        date_month: props.destination.date_month || '',
+        date_year: props.destination.date_year || '',
+        reasons: props.destination.reasons || '',
     })
+
+    const years = new Array();
+    const yearNow = new Date().getFullYear();
+    for (let addYear = 0; addYear <= 50; addYear++) {
+        years.push({value: yearNow + addYear, label: yearNow + addYear});
+        
+    }
+    const months = [
+        {value: 0, label: "January"},
+        {value: 1, label: "Feburary"},
+        {value: 2, label: "March"},
+        {value: 3, label: "April"},
+        {value: 4, label: "May"},
+        {value: 5, label: "June"},
+        {value: 6, label: "July"},
+        {value: 7, label: "August"},
+        {value: 8, label: "September"},
+        {value: 9, label: "October"},
+        {value: 10, label: "November"},
+        {value: 11, label: "December"},
+    ];
 
     function handleSubmit(e : React.FormEvent) {
         e.preventDefault();
         put(`/destinations/${data.id}`);
     }
+
     return (
         <Authenticated
             auth={props.auth}
@@ -54,13 +81,21 @@ export default function Edit(props: IEditProps) {
                                 </div>
                                 <div className='mb-2'>
                                     <label htmlFor="date">When do I plan to go there?</label>
-                                    <Input
-                                        type="text"
-                                        name="date"
-                                        id="date"
-                                        value={data.date}
-                                        handleChange={e => setData('date', e.target.value)}
-                                        className="w-full" />
+                                    <div>
+                                        <Select
+                                            name='date_month'
+                                            value={data.date_month}
+                                            items={months.filter(month => month.value >= new Date().getMonth() || parseInt(data.date_year) > yearNow)}
+                                            handleChange={e => setData("date_month", e.target.value)}
+                                            className="mr-2"
+                                        />
+                                        <Select
+                                            name='date_year'
+                                            value={data.date_year}
+                                            items={years}
+                                            handleChange={e => setData("date_year", e.target.value)}
+                                        />
+                                    </div>
                                     {errors.date && <div className='text-red-700'>{errors.date}</div>}
                                 </div>
                                 <div className='mb-2'>

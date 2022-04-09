@@ -13,6 +13,8 @@ interface DestinationListProps {
         id: number;
         location: string;
         date: string;
+        date_month: number;
+        date_year: string;
         reasons: string;
     }];
     sorts: [string];
@@ -22,6 +24,7 @@ export default function DestinationList(props: DestinationListProps) {
     const route = (window as any).route;
     let sorts = props.sorts || new Array;
     const [searchKey, setSearchkey] = useState('');
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     function getSortingClass(field: string) {
         const index = sorts.findIndex(sort => sort.indexOf(field+'|') > -1);
@@ -99,10 +102,10 @@ export default function DestinationList(props: DestinationListProps) {
                             <table className="table-auto horder-collapse border border-slate-400 w-full">
                                 <thead>
                                     <tr>
-                                        <th className={"border border-slate-300 bg-slate-100 text-left p-2 cursor-pointer sortable "+getSortingClass('location')} onClick={e => sort(e, 'location')}>Location</th>
-                                        <th className={"border border-slate-300 bg-slate-100 text-left p-2 cursor-pointer sortable "+getSortingClass('date')} onClick={e => sort(e, 'date')}>When</th>
-                                        <th className="border border-slate-300 bg-slate-100 text-left p-2">Why</th>
-                                        <th className="border border-slate-300 bg-slate-100 text-left p-2 w-1/6"></th>
+                                        <th className={"border border-slate-300 bg-slate-100 text-left p-2 cursor-pointer w-2/12 sortable "+getSortingClass('location')} onClick={e => sort(e, 'location')}>Location</th>
+                                        <th className={"border border-slate-300 bg-slate-100 text-left p-2 cursor-pointer w-2/12 sortable "+getSortingClass('date')} onClick={e => sort(e, 'date')}>When</th>
+                                        <th className="border border-slate-300 bg-slate-100 text-left p-2 w-5/12">Why</th>
+                                        <th className="border border-slate-300 bg-slate-100 text-left p-2 w-2/12"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -110,8 +113,8 @@ export default function DestinationList(props: DestinationListProps) {
                                         filteredDestinations().map((destination) => 
                                             <tr key={destination.id} className="border border-slate-300">
                                                 <td className='border border-slate-300 p-2'>{destination.location}</td>
-                                                <td className='border border-slate-300 p-2'>{destination.date}</td>
-                                                <td className='border border-slate-300 p-2'>{destination.reasons}</td>
+                                                <td className='border border-slate-300 p-2'>{destination.date_year}, {months[destination.date_month]}</td>
+                                                <td className='border border-slate-300 p-2 truncate text-ellipsis text-clip'>{destination.reasons}</td>
                                                 <td className='border border-slate-300 p-2 text-center'>
                                                     <Link href={route('destinations.edit', destination.id)} className="mr-2">
                                                         <Button className='bg-lime-600'>Edit</Button>

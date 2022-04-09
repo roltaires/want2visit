@@ -18,7 +18,13 @@ class DestinationController extends Controller
             foreach ($sorts as $sort) {
                 [$orderField, $orderBy] = explode('|',$sort);
 
-                $destinations->orderBy($orderField, $orderBy);
+                if($orderField == 'date') {
+                    $destinations->orderBy('date_year', $orderBy);
+                    $destinations->orderBy('date_month', $orderBy);
+                } else {
+                    $destinations->orderBy($orderField, $orderBy);
+                }
+
             }
         }
 
@@ -47,7 +53,8 @@ class DestinationController extends Controller
 
         $destination = new Destination;
         $destination->location = $request->location;
-        $destination->date = $request->date;
+        $destination->date_month = $request->date_month;
+        $destination->date_year = $request->date_year;
         $destination->reasons = $request->reasons;
         $destination->save();
 
@@ -71,7 +78,8 @@ class DestinationController extends Controller
 
         $destination = Destination::find($id);
         $destination->location = $request->location;
-        $destination->date = $request->date;
+        $destination->date_month = $request->date_month;
+        $destination->date_year = $request->date_year;
         $destination->reasons = $request->reasons;
         $destination->save();
 

@@ -2606,6 +2606,59 @@ exports["default"] = ResponsiveNavLink;
 
 /***/ }),
 
+/***/ "./resources/js/Components/Select.tsx":
+/*!********************************************!*\
+  !*** ./resources/js/Components/Select.tsx ***!
+  \********************************************/
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+
+function Select(_ref) {
+  var name = _ref.name,
+      value = _ref.value,
+      id = _ref.id,
+      className = _ref.className,
+      _ref$required = _ref.required,
+      required = _ref$required === void 0 ? false : _ref$required,
+      handleChange = _ref.handleChange,
+      placeholder = _ref.placeholder,
+      items = _ref.items;
+  return react_1["default"].createElement("select", {
+    name: name,
+    id: id,
+    value: value,
+    className: "border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm " + className,
+    required: required,
+    onChange: function onChange(e) {
+      return handleChange(e);
+    },
+    placeholder: placeholder
+  }, items.map(function (item) {
+    return react_1["default"].createElement("option", {
+      value: item.value,
+      key: item.value
+    }, item.label);
+  }));
+}
+
+exports["default"] = Select;
+
+/***/ }),
+
 /***/ "./resources/js/Components/Textarea.tsx":
 /*!**********************************************!*\
   !*** ./resources/js/Components/Textarea.tsx ***!
@@ -3852,10 +3905,14 @@ var Textarea_1 = __importDefault(__webpack_require__(/*! @/Components/Textarea *
 
 var Button_1 = __importDefault(__webpack_require__(/*! @/Components/Button */ "./resources/js/Components/Button.tsx"));
 
+var Select_1 = __importDefault(__webpack_require__(/*! @/Components/Select */ "./resources/js/Components/Select.tsx"));
+
 function Dashboard(props) {
   var _ref = (0, inertia_react_1.useForm)({
     location: '',
     date: '',
+    date_year: '',
+    date_month: '',
     reasons: ''
   }),
       data = _ref.data,
@@ -3863,6 +3920,54 @@ function Dashboard(props) {
       post = _ref.post,
       processing = _ref.processing,
       errors = _ref.errors;
+
+  var years = new Array();
+  var yearNow = new Date().getFullYear();
+
+  for (var addYear = 0; addYear <= 50; addYear++) {
+    years.push({
+      value: yearNow + addYear,
+      label: yearNow + addYear
+    });
+  }
+
+  var months = [{
+    value: 0,
+    label: "January"
+  }, {
+    value: 1,
+    label: "Feburary"
+  }, {
+    value: 2,
+    label: "March"
+  }, {
+    value: 3,
+    label: "April"
+  }, {
+    value: 4,
+    label: "May"
+  }, {
+    value: 5,
+    label: "June"
+  }, {
+    value: 6,
+    label: "July"
+  }, {
+    value: 7,
+    label: "August"
+  }, {
+    value: 8,
+    label: "September"
+  }, {
+    value: 9,
+    label: "October"
+  }, {
+    value: 10,
+    label: "November"
+  }, {
+    value: 11,
+    label: "December"
+  }];
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -3888,7 +3993,7 @@ function Dashboard(props) {
   }, react_1["default"].createElement("form", {
     onSubmit: handleSubmit
   }, react_1["default"].createElement("div", {
-    className: 'mb-2'
+    className: 'mb-3'
   }, react_1["default"].createElement("label", {
     htmlFor: "location"
   }, "Location"), react_1["default"].createElement(Input_1["default"], {
@@ -3903,22 +4008,30 @@ function Dashboard(props) {
   }), errors.location && react_1["default"].createElement("div", {
     className: 'text-red-700'
   }, errors.location)), react_1["default"].createElement("div", {
-    className: 'mb-2'
+    className: 'mb-3'
   }, react_1["default"].createElement("label", {
     htmlFor: "date"
-  }, "When do I plan to go there?"), react_1["default"].createElement(Input_1["default"], {
-    type: "text",
-    name: "date",
-    id: "date",
-    value: data.date,
+  }, "When do I plan to go there?"), react_1["default"].createElement("div", null, react_1["default"].createElement(Select_1["default"], {
+    name: 'date_month',
+    value: data.date_month,
+    items: months.filter(function (month) {
+      return month.value >= new Date().getMonth() || parseInt(data.date_year) > yearNow;
+    }),
     handleChange: function handleChange(e) {
-      return setData('date', e.target.value);
+      return setData("date_month", e.target.value);
     },
-    className: "w-full"
-  }), errors.date && react_1["default"].createElement("div", {
+    className: "mr-2"
+  }), react_1["default"].createElement(Select_1["default"], {
+    name: 'date_year',
+    value: data.date_year,
+    items: years,
+    handleChange: function handleChange(e) {
+      return setData("date_year", e.target.value);
+    }
+  })), errors.date && react_1["default"].createElement("div", {
     className: 'text-red-700'
   }, errors.date)), react_1["default"].createElement("div", {
-    className: 'mb-2'
+    className: 'mb-3'
   }, react_1["default"].createElement("label", {
     htmlFor: "reasons"
   }, "Why do I want to go there?"), react_1["default"].createElement(Textarea_1["default"], {
@@ -3972,18 +4085,70 @@ var Textarea_1 = __importDefault(__webpack_require__(/*! @/Components/Textarea *
 
 var Button_1 = __importDefault(__webpack_require__(/*! @/Components/Button */ "./resources/js/Components/Button.tsx"));
 
+var Select_1 = __importDefault(__webpack_require__(/*! @/Components/Select */ "./resources/js/Components/Select.tsx"));
+
 function Edit(props) {
   var _ref = (0, inertia_react_1.useForm)({
     id: props.destination.id,
-    location: props.destination.location,
-    date: props.destination.date ? props.destination.date : '',
-    reasons: props.destination.reasons ? props.destination.reasons : ''
+    location: props.destination.location || '',
+    date: props.destination.date || '',
+    date_month: props.destination.date_month || '',
+    date_year: props.destination.date_year || '',
+    reasons: props.destination.reasons || ''
   }),
       data = _ref.data,
       setData = _ref.setData,
       put = _ref.put,
       processing = _ref.processing,
       errors = _ref.errors;
+
+  var years = new Array();
+  var yearNow = new Date().getFullYear();
+
+  for (var addYear = 0; addYear <= 50; addYear++) {
+    years.push({
+      value: yearNow + addYear,
+      label: yearNow + addYear
+    });
+  }
+
+  var months = [{
+    value: 0,
+    label: "January"
+  }, {
+    value: 1,
+    label: "Feburary"
+  }, {
+    value: 2,
+    label: "March"
+  }, {
+    value: 3,
+    label: "April"
+  }, {
+    value: 4,
+    label: "May"
+  }, {
+    value: 5,
+    label: "June"
+  }, {
+    value: 6,
+    label: "July"
+  }, {
+    value: 7,
+    label: "August"
+  }, {
+    value: 8,
+    label: "September"
+  }, {
+    value: 9,
+    label: "October"
+  }, {
+    value: 10,
+    label: "November"
+  }, {
+    value: 11,
+    label: "December"
+  }];
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -4027,16 +4192,24 @@ function Edit(props) {
     className: 'mb-2'
   }, react_1["default"].createElement("label", {
     htmlFor: "date"
-  }, "When do I plan to go there?"), react_1["default"].createElement(Input_1["default"], {
-    type: "text",
-    name: "date",
-    id: "date",
-    value: data.date,
+  }, "When do I plan to go there?"), react_1["default"].createElement("div", null, react_1["default"].createElement(Select_1["default"], {
+    name: 'date_month',
+    value: data.date_month,
+    items: months.filter(function (month) {
+      return month.value >= new Date().getMonth() || parseInt(data.date_year) > yearNow;
+    }),
     handleChange: function handleChange(e) {
-      return setData('date', e.target.value);
+      return setData("date_month", e.target.value);
     },
-    className: "w-full"
-  }), errors.date && react_1["default"].createElement("div", {
+    className: "mr-2"
+  }), react_1["default"].createElement(Select_1["default"], {
+    name: 'date_year',
+    value: data.date_year,
+    items: years,
+    handleChange: function handleChange(e) {
+      return setData("date_year", e.target.value);
+    }
+  })), errors.date && react_1["default"].createElement("div", {
     className: 'text-red-700'
   }, errors.date)), react_1["default"].createElement("div", {
     className: 'mb-2'
@@ -4154,6 +4327,8 @@ function DestinationList(props) {
       searchKey = _ref2[0],
       setSearchkey = _ref2[1];
 
+  var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
   function getSortingClass(field) {
     var index = sorts.findIndex(function (sort) {
       return sort.indexOf(field + '|') > -1;
@@ -4240,19 +4415,19 @@ function DestinationList(props) {
   }, react_1["default"].createElement(Button_1["default"], null, "Add New")))), react_1["default"].createElement("table", {
     className: "table-auto horder-collapse border border-slate-400 w-full"
   }, react_1["default"].createElement("thead", null, react_1["default"].createElement("tr", null, react_1["default"].createElement("th", {
-    className: "border border-slate-300 bg-slate-100 text-left p-2 cursor-pointer sortable " + getSortingClass('location'),
+    className: "border border-slate-300 bg-slate-100 text-left p-2 cursor-pointer w-2/12 sortable " + getSortingClass('location'),
     onClick: function onClick(e) {
       return sort(e, 'location');
     }
   }, "Location"), react_1["default"].createElement("th", {
-    className: "border border-slate-300 bg-slate-100 text-left p-2 cursor-pointer sortable " + getSortingClass('date'),
+    className: "border border-slate-300 bg-slate-100 text-left p-2 cursor-pointer w-2/12 sortable " + getSortingClass('date'),
     onClick: function onClick(e) {
       return sort(e, 'date');
     }
   }, "When"), react_1["default"].createElement("th", {
-    className: "border border-slate-300 bg-slate-100 text-left p-2"
+    className: "border border-slate-300 bg-slate-100 text-left p-2 w-5/12"
   }, "Why"), react_1["default"].createElement("th", {
-    className: "border border-slate-300 bg-slate-100 text-left p-2 w-1/6"
+    className: "border border-slate-300 bg-slate-100 text-left p-2 w-2/12"
   }))), react_1["default"].createElement("tbody", null, filteredDestinations().length > 0 && filteredDestinations().map(function (destination) {
     return react_1["default"].createElement("tr", {
       key: destination.id,
@@ -4261,8 +4436,8 @@ function DestinationList(props) {
       className: 'border border-slate-300 p-2'
     }, destination.location), react_1["default"].createElement("td", {
       className: 'border border-slate-300 p-2'
-    }, destination.date), react_1["default"].createElement("td", {
-      className: 'border border-slate-300 p-2'
+    }, destination.date_year, ", ", months[destination.date_month]), react_1["default"].createElement("td", {
+      className: 'border border-slate-300 p-2 truncate text-ellipsis text-clip'
     }, destination.reasons), react_1["default"].createElement("td", {
       className: 'border border-slate-300 p-2 text-center'
     }, react_1["default"].createElement(inertia_react_1.Link, {
