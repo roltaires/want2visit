@@ -4,11 +4,15 @@ import { Head, Link } from '@inertiajs/inertia-react';
 import Button from '@/Components/Button';
 import Input from '@/Components/Input';
 import { Inertia } from '@inertiajs/inertia';
-import debounce from 'lodash/debounce';
 
 interface DestinationListProps {
-    auth: any;
-    errors: any;
+    auth: {
+        user: {
+            name: string;
+            email: string;
+        };
+    };
+    errors: {};
     destinations: [{
         id: number;
         location: string;
