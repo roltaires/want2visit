@@ -4469,7 +4469,7 @@ function DestinationList(props) {
 
     if (searchKey.length > 0) {
       return destinations.filter(function (destination) {
-        return destination.location && destination.location.toLowerCase().indexOf(processedSearchKey) > -1 || destination.reasons && destination.reasons.toLowerCase().indexOf(processedSearchKey) > -1 || destination.date && destination.date.toLowerCase().indexOf(processedSearchKey) > -1;
+        return destination.location && destination.location.toLowerCase().indexOf(processedSearchKey) > -1 || destination.reasons && destination.reasons.toLowerCase().indexOf(processedSearchKey) > -1 || destination.date_month && months[destination.date_month].toLowerCase().indexOf(processedSearchKey) > -1 || destination.date_year && destination.date_year.toLowerCase().indexOf(processedSearchKey) > -1;
       });
     }
 

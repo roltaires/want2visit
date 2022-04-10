@@ -66,7 +66,8 @@ export default function DestinationList(props: DestinationListProps) {
             return destinations.filter(destination =>
                 (destination.location && destination.location.toLowerCase().indexOf(processedSearchKey) > -1) ||
                 (destination.reasons && destination.reasons.toLowerCase().indexOf(processedSearchKey) > -1) || 
-                (destination.date && destination.date.toLowerCase().indexOf(processedSearchKey) > -1)
+                (destination.date_month && months[destination.date_month].toLowerCase().indexOf(processedSearchKey) > -1) ||
+                (destination.date_year && destination.date_year.toLowerCase().indexOf(processedSearchKey) > -1)
             );
         }
 
