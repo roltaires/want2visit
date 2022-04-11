@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Authenticated from '@/Layouts/Authenticated';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { useForm } from '@inertiajs/inertia-react';
 import Input from '@/Components/Input';
 import Textarea from '@/Components/Textarea';
 import Button from '@/Components/Button';
 import Select from '@/Components/Select';
 
-export default function Dashboard(props: { auth: any; errors: any; }) {
+export default function Create(props: { auth: any; errors: any; }) {
     const { data, setData, post, processing, errors } = useForm({
         location: '',
         date: '',
@@ -46,13 +46,11 @@ export default function Dashboard(props: { auth: any; errors: any; }) {
             errors={props.errors}
             header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Create Destination</h2>}
         >
-            <Head title="Create Destination" />
-
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <div className="p-6 bg-white border-b border-gray-200">
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit} data-testid="create-form">
                                 <div className='mb-3'>
                                     <label htmlFor="location">Location</label>
                                     <Input

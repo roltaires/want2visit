@@ -4,6 +4,7 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
+import ErrorBoundary from '@/Components/ErrorBoundary';
 
 interface Props {
     auth: {
@@ -18,7 +19,7 @@ interface Props {
 }
 
 export const Authenticated: React.FC<Props> = ({auth,header,children}) => {
-    const route = (window as any).route;
+    const route = (window as any).route || (() => {return {current: () => {}}});
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
 
@@ -35,12 +36,14 @@ export const Authenticated: React.FC<Props> = ({auth,header,children}) => {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                                <NavLink href={route('destinations.index')} active={route().current('destinations.index')}>
-                                    Destinations
-                                </NavLink>
+                                <ErrorBoundary>
+                                    <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                        Dashboard
+                                    </NavLink>
+                                    <NavLink href={route('destinations.index')} active={route().current('destinations.index')}>
+                                        Destinations
+                                    </NavLink>
+                                </ErrorBoundary>
                             </div>
                         </div>
 
@@ -72,9 +75,11 @@ export const Authenticated: React.FC<Props> = ({auth,header,children}) => {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
-                                            Log Out
-                                        </Dropdown.Link>
+                                        <ErrorBoundary>
+                                            <Dropdown.Link href={route('logout')} method="post" as="button">
+                                                Log Out
+                                            </Dropdown.Link>
+                                        </ErrorBoundary>
                                     </Dropdown.Content>
                                 </Dropdown>
                             </div>
@@ -108,9 +113,11 @@ export const Authenticated: React.FC<Props> = ({auth,header,children}) => {
 
                 <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
                     <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
+                        <ErrorBoundary>
+                            <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                Dashboard
+                            </ResponsiveNavLink>
+                        </ErrorBoundary>
                     </div>
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
@@ -120,9 +127,11 @@ export const Authenticated: React.FC<Props> = ({auth,header,children}) => {
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                Log Out
-                            </ResponsiveNavLink>
+                            <ErrorBoundary>
+                                <ResponsiveNavLink method="post" href={route('logout')} as="button">
+                                    Log Out
+                                </ResponsiveNavLink>
+                            </ErrorBoundary>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import Authenticated from '@/Layouts/Authenticated';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import Input from '@/Components/Input';
 import Textarea from '@/Components/Textarea';
 import Button from '@/Components/Button';
@@ -95,7 +95,16 @@ export default function Edit(props: IEditProps) {
         <Authenticated
             auth={props.auth}
             errors={props.errors}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Edit Destination</h2>}
+            header={
+                <div className='flex'>
+                    <h2 className="font-semibold text-xl text-gray-800 leading-tight w-1/2">Edit  Destination</h2>
+                    <div className='w-1/2 text-right'>
+                        <Link href={route('destinations.create')}>
+                            <Button>Add New</Button>
+                        </Link>
+                    </div>
+                </div>
+            }
         >
             <Head title="Edit Destination" />
 
@@ -158,11 +167,9 @@ export default function Edit(props: IEditProps) {
                             </h2>
                             <div className='search-results w-full relative'>
                                 <div className='search-results-box w-full p-6 sm:rounded-lg transition ease-in-out overflow-auto columns-3 gap-3'>
-                                    {searchResults && searchResults.photos.map(photo =>
-                                        <div className='image-result w-full mb-3'>
-                                            <img src={photo.small_url} className="w-full" />
-                                        </div>  
-                                    )}
+                                    {searchResults?.photos.map(photo => <div className='image-result w-full mb-3' key={photo.unspash_id}>
+                                        <img src={photo.small_url} className="w-full" />
+                                    </div>)}
                                 </div>
                             </div>
                         </div>
